@@ -1,4 +1,16 @@
 {
+  "post": {
+    "using": "@mutate:savePost",
+    "args": ["params: PostParams = $newPost"],
+    "return": "@model:Post"
+  },
+  "allPost": {
+    "using": "findPost",
+    "args": [""]
+  }
+}
+
+/*{
   "command": {
     "mutate savePost(params: $post) as post": {
       "return": "@model:Post.id",
@@ -12,4 +24,15 @@
       "firstName": "Joe"
     }
   }
-}
+}*/
+/*{
+  `mutate post @using savePost(params = $newPost) {
+    ...getPost(id = $id) {
+      ...Post
+      author @using getAuthor(id = $authorId) {
+        id,
+        firstName
+      }
+    }
+  }`
+}*/
