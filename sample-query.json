@@ -1,0 +1,15 @@
+{
+  "command": {
+    "mutate savePost(params: $post) as post": {
+      "return": "@model:Post.id",
+      "query getPost(id: $id) @flatten": {}
+    }
+  },
+  "data": {
+    "postId": 1,
+    "author": {
+      "id": 102,
+      "firstName": "Joe"
+    }
+  }
+}
