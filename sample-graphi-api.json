@@ -1,0 +1,54 @@
+{
+  "version": "2018.3.30",
+  "schema": {
+    "model": {
+      "Post": {
+        "id": {
+          "type": "number"
+        },
+        "title": {
+          "type": "string",
+          "nullable": false,
+          "size": [
+            2,
+            128
+          ]
+        },
+        "body": {
+          "type": "string"
+        },
+        "publishedDate": {
+          "type": "date",
+          "dateFormat": "dd/MMM/yyyy hh:mm"
+        }
+      },
+      "Author": {
+        "id": {"type": "number"},
+        "firstName": {"type": "string", "size": [2, 128]},
+        "lastName": {"type": "string", "size": [2, 128]}
+      }
+    },
+    "query": {
+      "getPost": {
+        "params": {
+          "id": {"type": "number", "nullable": false}
+        },
+        "result": {
+          "@model": "Post"
+        }
+      },
+      "findPostByAuthor": {
+        "params": {
+          "authorId": {"type": "number", "nullable": false}
+        },
+        "result": {
+          "@model": "Post"
+        }
+      },
+      "findAuthorByPost": {
+        "postId": {"@property": "Post.id"},
+        "postTitle": {"@property": "Post.title"}
+      }
+    }
+  }
+}
