@@ -17,9 +17,10 @@
         "type": "string"
       },
       "publishedDate": {
-        "type": "date",
+        "type": "string",
         "dateFormat": "dd/MMM/yyyy hh:mm"
-      }
+      },
+      "author": "#Author"
     },
     "Author": {
       "id": {"type": "number"},
@@ -32,21 +33,17 @@
       "params": {
         "id": {"type": "number", "nullable": false}
       },
-      "result": {
-        "@model": "Post"
-      }
+      "result": "#Post"
     },
     "findPostByAuthor": {
       "params": {
         "authorId": {"type": "number", "nullable": false}
       },
-      "result": {
-        "@model": "Post"
-      }
+      "result": "#Post"
     },
     "findAuthorByPost": {
-      "postId": {"@property": "Post.id"},
-      "postTitle": {"@property": "Post.title"}
+      "postId": "#Post.id",
+      "postTitle": "#Post.title"
     }
   }
 }

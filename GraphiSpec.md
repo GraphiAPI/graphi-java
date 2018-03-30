@@ -1,10 +1,9 @@
 Schema
 * Model
-* Property
+* Field
   * type
     - string
     - number
-    - date
     - array
     - null
   * nullable

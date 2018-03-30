@@ -1,12 +1,18 @@
 {
   "post": {
-    "using": "@mutate:savePost",
-    "args": ["params: PostParams = $newPost"],
-    "return": "@model:Post"
+    "using": "savePost:mutate",
+    "args": {
+      "params: Post": "$newPost"
+    },
+    "return": "#Post"
   },
-  "allPost": {
+  "posts": {
     "using": "findPost",
-    "args": [""]
+    "args": [],
+    "@filter": {
+      "start": 0,
+      "size": 100
+    }
   }
 }
 
