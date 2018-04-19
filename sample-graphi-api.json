@@ -13,6 +13,23 @@
     },
     "return": "#Post"
   },
+  "findPost": {
+    "params": {
+      "postId": {
+        "type": "number",
+        "nullable": true
+      },
+      "authorId": {
+        "type": "number",
+        "nullable": true
+      },
+      "page": {
+        "type": "Page",
+        "nullable": true
+      }
+    },
+    "return": "#Post[]"
+  },
   "findPostByAuthor": {
     "params": {
       "authorId": {
