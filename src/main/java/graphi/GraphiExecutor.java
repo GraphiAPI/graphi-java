@@ -1,6 +1,6 @@
 package graphi;
 
-import graphi.schema.Command;
+import graphi.api.Command;
 
 public interface GraphiExecutor<T> {
 

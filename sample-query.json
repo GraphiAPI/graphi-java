@@ -1,8 +1,8 @@
 {
-  "post": {
-    "using": "savePost:mutate",
+  "post: savePost": {
+    "using": "customExecutor",
     "args": {
-      "params: Post": "$newPost"
+      "postParams": "$newPostParams"
     },
     "return": "#Post"
   },

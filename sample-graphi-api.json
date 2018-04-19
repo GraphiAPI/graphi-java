@@ -1,49 +1,31 @@
 {
-  "version": "2018.3.30",
-  "model": {
-    "Post": {
+  "savePost": {
+    "params": {
+      "newPostParams": "#Post"
+    },
+    "return": "#Post"
+  },
+  "getPost": {
+    "params": {
       "id": {
         "type": "number"
-      },
-      "title": {
-        "type": "string",
-        "nullable": false,
-        "size": [
-          2,
-          128
-        ]
-      },
-      "body": {
-        "type": "string"
-      },
-      "publishedDate": {
-        "type": "string",
-        "dateFormat": "dd/MMM/yyyy hh:mm"
-      },
-      "author": "#Author"
+      }
     },
-    "Author": {
-      "id": {"type": "number"},
-      "firstName": {"type": "string", "size": [2, 128]},
-      "lastName": {"type": "string", "size": [2, 128]}
-    }
+    "return": "#Post"
   },
-  "command": {
-    "getPost": {
-      "params": {
-        "id": {"type": "number", "nullable": false}
-      },
-      "result": "#Post"
+  "findPostByAuthor": {
+    "params": {
+      "authorId": {
+        "type": "number"
+      }
     },
-    "findPostByAuthor": {
-      "params": {
-        "authorId": {"type": "number", "nullable": false}
-      },
-      "result": "#Post"
-    },
-    "findAuthorByPost": {
+    "return": "#Post"
+  },
+  "findAuthorByPost": {
+    "params": {
       "postId": "#Post.id",
       "postTitle": "#Post.title"
-    }
+    },
+    "return": "#Author"
   }
 }
