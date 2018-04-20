@@ -1,4 +1,4 @@
 package graphi.schema;
 
-public class Property {
+public class FieldDef {
 }

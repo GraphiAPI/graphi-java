@@ -1,14 +1,15 @@
-package graphi.schema;
+package graphi;
 
-import java.util.HashMap;
+import graphi.schema.Model;
+
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GraphiSchema {
 
   private final Map<String, Model> modelMap;
-  private String version;
 
   public GraphiSchema() {
-    modelMap = new HashMap<>();
+    modelMap = new LinkedHashMap<>();
   }
 }

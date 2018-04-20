@@ -1,6 +1,6 @@
 package graphi.api;
 
-public class Command {
+public abstract class Command {
 
 
 
