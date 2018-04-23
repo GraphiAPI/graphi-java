@@ -1,7 +1,7 @@
 Schema
 * Model
 * Field
-  * type
+  * graphiObjectType
     - string
     - number
     - array

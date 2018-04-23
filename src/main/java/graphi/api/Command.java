@@ -1,9 +1,34 @@
 package graphi.api;
 
-import java.util.List;
+import graphi.schema.GraphiConstraintMap;
+import graphi.schema.GraphiType;
 
-public abstract class Command {
+public interface Command {
 
-  private List<Command> childCommands;
+  String getName();
+
+  GraphiConstraintMap getParams();
+
+  GraphiType getReturnType();
+
+  class Builder {
+
+    private Command command;
+
+    private Builder() {
+      command =
+    }
+
+    public static Builder newBuilder() {
+      Builder builder = new Builder();
+
+      return builder;
+    }
+
+    public Builder name(String name) {
+
+    }
+
+  }
 
 }

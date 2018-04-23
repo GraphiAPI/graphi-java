@@ -2,8 +2,8 @@ package graphi.tools;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import graphi.GraphiSchema;
-import graphi.schema.Field;
-import graphi.schema.Type;
+import graphi.schema.GraphiField;
+import graphi.schema.GraphiObjectType;
 
 import java.io.IOException;
 import java.util.Map;
@@ -19,13 +19,13 @@ public class GraphiParser {
     Map<String, Map<String, Object>> schema = new ObjectMapper().readValue(json, Map.class);
     GraphiSchema graphiSchema = new GraphiSchema();
     schema.forEach((String typeName, Map<String, Object> typeDef) -> {
-      Type type = new Type(typeName);
+      GraphiObjectType graphiObjectType = new GraphiObjectType(typeName);
       typeDef.forEach((String fieldName, Object fieldDef) -> {
         if(fieldDef instanceof Map) {
-          type.addField(new Field(fieldName, (Map<String, Object>)fieldDef));
+          graphiObjectType.addField(new GraphiField(fieldName, (Map<String, Object>)fieldDef));
         }
       });
-      graphiSchema.addType(typeName, type);
+      graphiSchema.addType(typeName, graphiObjectType);
     });
     return graphiSchema;
   }

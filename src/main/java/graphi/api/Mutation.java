@@ -1,4 +1,4 @@
 package graphi.api;
 
-public class Mutation {
+public class Mutation extends AbstractCommand {
 }
