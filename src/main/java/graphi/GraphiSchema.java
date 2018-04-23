@@ -1,15 +1,23 @@
 package graphi;
 
-import graphi.schema.Model;
+import graphi.schema.Type;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GraphiSchema {
 
-  private final Map<String, Model> modelMap;
+  private final Map<String, Type> typesMap;
 
   public GraphiSchema() {
-    modelMap = new LinkedHashMap<>();
+    typesMap = new LinkedHashMap<>();
   }
+
+  public void addType(String name, Type type) {
+    if (typesMap.containsKey(name)) {
+      throw new IllegalStateException(String.format("Type %s already defined.", name));
+    }
+    typesMap.put(name, type);
+  }
+
 }

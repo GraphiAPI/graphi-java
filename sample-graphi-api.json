@@ -7,24 +7,16 @@
   },
   "getPost": {
     "params": {
-      "id": {
-        "type": "number"
-      }
+      "id": "#Post.id"
     },
     "return": "#Post"
   },
   "findPost": {
     "params": {
-      "postId": {
-        "type": "number",
-        "nullable": true
-      },
-      "authorId": {
-        "type": "number",
-        "nullable": true
-      },
+      "postId": "#Post.id",
+      "authorId": "#Author.id",
       "page": {
-        "type": "Page",
+        "type": "page",
         "nullable": true
       }
     },
