@@ -39,9 +39,9 @@ public class SimpleBlogApp extends HttpServlet {
 
   private void buildGraphi() {
     graphi = Graphi.init(new GraphiSchema(
-        GraphiSchema.buildObjectTypes(Post.class, Author.class, Category.class, Tag.class),
-        GraphiSchema.buildEndpoints(new PostRepository())
-      ));
+      GraphiSchema.buildObjectTypes(Post.class, Author.class, Category.class, Tag.class),
+      GraphiSchema.buildEndpoints(new PostRepository())
+    ));
   }
 
   @Override

@@ -14,6 +14,6 @@ Schema
 * ####Command  
 Based on execution strategy, following three command types are implemented by default.
   * #####Query  
-    Use graphiQuery command to execute it parallel 
+    Use query command to execute it parallel 
   * Mutate
   * Subscribe

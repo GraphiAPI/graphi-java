@@ -8,23 +8,22 @@ import java.util.Map;
 /**
  * Combination of GraphiEndpoints in a graph manner
  */
-public class GraphiQuery {
+public class Query {
 
   private String name;
-  private EndpointsMap endpointsMap;
   private Map<String, String> argumentsMap;
-  private Map<String, GraphiQuery> children;
+  private Map<String, Query> children;
   private CommandExecutor executor;
   private Boolean executeAsync = true;
   private Boolean isNamedCommand = false;
 
-  public GraphiQuery() {
+  public Query() {
     argumentsMap = new HashMap<>();
     children = new HashMap<>();
   }
 
-  public GraphiQuery(Map<String, Object> commandGraphMap) {
-    commandGraphMap.forEach((name, obj) -> {
+  public Query(Map<String, Object> queryMap) {
+    queryMap.forEach((name, obj) -> {
       String[] namePlusCommandName = name.split(":");
       if (namePlusCommandName.length > 1) {
         this.name = namePlusCommandName[0];
@@ -41,14 +40,6 @@ public class GraphiQuery {
     this.name = name;
   }
 
-  public EndpointsMap getEndpointsMap() {
-    return endpointsMap;
-  }
-
-  public void setEndpointsMap(EndpointsMap endpointsMap) {
-    this.endpointsMap = endpointsMap;
-  }
-
   public Map<String, String> getArgumentsMap() {
     return argumentsMap;
   }
@@ -57,11 +48,11 @@ public class GraphiQuery {
     this.argumentsMap = argumentsMap;
   }
 
-  public Map<String, GraphiQuery> getChildren() {
+  public Map<String, Query> getChildren() {
     return children;
   }
 
-  public void setChildren(Map<String, GraphiQuery> children) {
+  public void setChildren(Map<String, Query> children) {
     this.children = children;
   }
 
