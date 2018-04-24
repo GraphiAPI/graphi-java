@@ -1,23 +1,21 @@
 package graphi.schema.type;
 
-import graphi.schema.GraphiConstraintMap;
+import graphi.schema.Type;
 
 import java.util.Map;
+
+import static graphi.schema.Constraint.*;
 
 @SuppressWarnings("unchecked")
 public class GraphiField {
 
   private final String name;
-  private final GraphiConstraintMap constraintMap;
+  private final FieldConstraint constraintMap;
 
   public GraphiField(String name, Map<String, Object> constraintMap) {
     this.name = name;
-    this.constraintMap = new GraphiConstraintMap();
+    this.constraintMap = new FieldConstraint((Type)constraintMap.get(TYPE));
     this.constraintMap.putAll(constraintMap);
-  }
-
-  public GraphiField(String name) {
-    this(name, new GraphiConstraintMap());
   }
 
   public String getName() {
@@ -25,7 +23,7 @@ public class GraphiField {
   }
 
   public void addConstraint(String name, Object value) {
-    constraintMap.put(name, value);
+    constraintMap.addConstraint(name, value);
   }
 
   public <V> V getConstraintValue(String name) {

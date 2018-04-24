@@ -1,8 +1,8 @@
 package graphi.examples.simpleblog;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import graphi.EndpointsMap;
 import graphi.Graphi;
-import graphi.GraphiEndpointMap;
 import graphi.GraphiRequest;
 import graphi.GraphiSchema;
 import graphi.examples.simpleblog.entity.Author;
@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
-@WebServlet(urlPatterns = {"/graphql"}, loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/graphi"}, loadOnStartup = 1)
 public class SimpleBlogApp extends HttpServlet {
 
   private Graphi graphi;
@@ -40,8 +40,9 @@ public class SimpleBlogApp extends HttpServlet {
 
   private void buildGraphi() {
     graphi = Graphi.init(
-      GraphiSchema.use(Post.class, Author.class, Category.class, Tag.class),
-      GraphiEndpointMap.use(PostRepository.class));
+      GraphiSchema.scan(Post.class, Author.class, Category.class, Tag.class),
+      EndpointsMap.use(new PostRepository())
+    );
   }
 
   @Override

@@ -1,4 +1,4 @@
-package graphi.command.execution;
+package graphi.query.executor;
 
 public class QueryExecutor implements CommandExecutor {
 

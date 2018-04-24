@@ -1,31 +1,33 @@
 package graphi;
 
 import graphi.schema.type.GraphiField;
-import graphi.schema.type.GraphiObjectType;
+import graphi.schema.type.ObjectType;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GraphiSchema {
 
-  private final Map<String, GraphiObjectType> typesMap;
+  private final Map<String, ObjectType> typesMap;
+  private final EndpointsMap endpointsMap;
 
   public GraphiSchema() {
     typesMap = new LinkedHashMap<>();
+    this.endpointsMap = new EndpointsMap();
   }
 
-  public void addType(String name, GraphiObjectType graphiObjectType) {
+  public void addType(String name, ObjectType objectType) {
     if (typesMap.containsKey(name)) {
-      throw new IllegalStateException(String.format("GraphiObjectType %s already defined.", name));
+      throw new IllegalStateException(String.format("ObjectType %s already defined.", name));
     }
-    typesMap.put(name, graphiObjectType);
+    typesMap.put(name, objectType);
   }
 
-  public static GraphiSchema use(Class... graphiTypeClasses) {
+  public static GraphiSchema scan(Class... graphiTypeClasses) {
     for (Class typeClass : graphiTypeClasses) {
       graphi.annotation.GraphiType graphiTypeAnnot = (graphi.annotation.GraphiType)typeClass.getAnnotation(graphi.annotation.GraphiType.class);
       String typeName = graphiTypeAnnot.name().isEmpty() ? typeClass.getSimpleName() : graphiTypeAnnot.name();
-      GraphiObjectType graphiObjectType = new GraphiObjectType(typeName);
+      ObjectType objectType = new ObjectType(typeName);
       for (java.lang.reflect.Field jField : typeClass.getFields()) {
         GraphiField graphiField = new GraphiField(jField.getName());
       }

@@ -3,13 +3,13 @@ package graphi.schema.type;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GraphiObjectType {
+public class ObjectType {
 
   private final String name;
   private final Set<GraphiField> graphiFields;
   private Class javaType;
 
-  public GraphiObjectType(String name) {
+  public ObjectType(String name) {
     this.name = name;
     this.graphiFields = new HashSet<>();
   }

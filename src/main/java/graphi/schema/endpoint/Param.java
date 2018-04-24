@@ -1,27 +1,27 @@
 package graphi.schema.endpoint;
 
-import graphi.annotation.GraphiType;
-
 import java.util.Collections;
 import java.util.Map;
 
-public class EndpointParam {
+public class Param {
 
   private final String name;
-  private final GraphiType type;
-  private final ParamConstraintMap paramConstraintMap;
+  private final String type;
+  private final Object value;
+  private final ParamConstraint paramConstraintMap;
 
-  public EndpointParam(String name, GraphiType type) {
+  public Param(String name, String type) {
+    super();
     this.name = name;
     this.type = type;
-    this.paramConstraintMap = new ParamConstraintMap(type);
+    this.paramConstraintMap = new ParamConstraint(type);
   }
 
   public String getName() {
     return name;
   }
 
-  public GraphiType getType() {
+  public String getType() {
     return type;
   }
 

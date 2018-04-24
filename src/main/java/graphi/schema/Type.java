@@ -1,6 +1,6 @@
-package graphi.schema.type;
+package graphi.schema;
 
-public interface GraphiType<T> {
+public interface Type<T> {
 
   String getName();
 

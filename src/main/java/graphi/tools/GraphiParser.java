@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import graphi.GraphiQuery;
 import graphi.GraphiSchema;
 import graphi.schema.type.GraphiField;
-import graphi.schema.type.GraphiObjectType;
+import graphi.schema.type.ObjectType;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,13 +32,13 @@ public class GraphiParser {
     Map<String, Map<String, Object>> schema = new ObjectMapper().readValue(json, Map.class);
     GraphiSchema graphiSchema = new GraphiSchema();
     schema.forEach((String typeName, Map<String, Object> typeDef) -> {
-      GraphiObjectType graphiObjectType = new GraphiObjectType(typeName);
+      ObjectType objectType = new ObjectType(typeName);
       typeDef.forEach((String fieldName, Object fieldDef) -> {
         if(fieldDef instanceof Map) {
-          graphiObjectType.addField(new GraphiField(fieldName, (Map<String, Object>)fieldDef));
+          objectType.addField(new GraphiField(fieldName, (Map<String, Object>)fieldDef));
         }
       });
-      graphiSchema.addType(typeName, graphiObjectType);
+      graphiSchema.addType(typeName, objectType);
     });
     return graphiSchema;
   }

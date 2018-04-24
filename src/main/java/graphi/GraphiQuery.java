@@ -1,6 +1,6 @@
 package graphi;
 
-import graphi.command.execution.CommandExecutor;
+import graphi.query.executor.CommandExecutor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.Map;
 public class GraphiQuery {
 
   private String name;
-  private GraphiEndpointMap graphiEndpointMap;
+  private EndpointsMap endpointsMap;
   private Map<String, String> argumentsMap;
   private Map<String, GraphiQuery> children;
   private CommandExecutor executor;
@@ -28,7 +28,7 @@ public class GraphiQuery {
       String[] namePlusCommandName = name.split(":");
       if (namePlusCommandName.length > 1) {
         this.name = namePlusCommandName[0];
-        //this.command = findCommand()
+        //this.query = findCommand()
       }
     });
   }
@@ -41,12 +41,12 @@ public class GraphiQuery {
     this.name = name;
   }
 
-  public GraphiEndpointMap getGraphiEndpointMap() {
-    return graphiEndpointMap;
+  public EndpointsMap getEndpointsMap() {
+    return endpointsMap;
   }
 
-  public void setGraphiEndpointMap(GraphiEndpointMap graphiEndpointMap) {
-    this.graphiEndpointMap = graphiEndpointMap;
+  public void setEndpointsMap(EndpointsMap endpointsMap) {
+    this.endpointsMap = endpointsMap;
   }
 
   public Map<String, String> getArgumentsMap() {

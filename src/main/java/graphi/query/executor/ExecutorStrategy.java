@@ -1,4 +1,4 @@
-package graphi.command.execution;
+package graphi.query.executor;
 
 public interface ExecutorStrategy {
 }

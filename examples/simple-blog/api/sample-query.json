@@ -17,7 +17,7 @@
 }
 
 /*{
-  "command": {
+  "query": {
     "mutate savePost(params: $post) as post": {
       "return": "@model:Post.id",
       "query getPost(id: $id) @flatten": {}

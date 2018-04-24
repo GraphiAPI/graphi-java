@@ -1,6 +1,6 @@
 package graphi;
 
-import graphi.command.Command;
+import graphi.query.Command;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class GraphiRequest {
     Object data = new HashMap<>();
     if (cmd == null) {
       /*
-       * if `cmd` param is missing, then whole payload is command, and data is empty
+       * if `cmd` param is missing, then whole payload is query, and data is empty
        */
       cmd = new HashMap<>(payload);
     } else {

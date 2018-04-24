@@ -1,18 +1,22 @@
-package graphi.schema.endpoint;
+package graphi.schema;
 
-import graphi.schema.type.GraphiType;
+import graphi.schema.endpoint.Param;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphiEndpoint {
+public class Endpoint {
 
   private String name;
-  private List<EndpointParam> endpointParams = new ArrayList<>();
-  private GraphiType returnType;
+  private List<Param> params;
+  private Type returnType;
   private Object resolverObject;
   private Method resolverMethod;
+
+  public Endpoint() {
+    this.params = new ArrayList<>();
+  }
 
   public String getName() {
     return name;
@@ -22,19 +26,19 @@ public class GraphiEndpoint {
     this.name = name;
   }
 
-  public List<EndpointParam> getEndpointParams() {
-    return endpointParams;
+  public List<Param> getParams() {
+    return params;
   }
 
-  public void setEndpointParams(List<EndpointParam> endpointParams) {
-    this.endpointParams = endpointParams;
+  public void addParam(Param param) {
+    this.params.add(param);
   }
 
-  public GraphiType getReturnType() {
+  public Type getReturnType() {
     return returnType;
   }
 
-  public void setReturnType(GraphiType returnType) {
+  public void setReturnType(Type returnType) {
     this.returnType = returnType;
   }
 
