@@ -2,7 +2,7 @@ package graphi.command;
 
 import graphi.command.execution.CommandExecutor;
 import graphi.schema.GraphiConstraintMap;
-import graphi.schema.GraphiType;
+import graphi.schema.type.GraphiType;
 
 import java.util.List;
 

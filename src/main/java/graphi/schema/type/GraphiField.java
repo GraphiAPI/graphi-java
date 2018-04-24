@@ -1,4 +1,6 @@
-package graphi.schema;
+package graphi.schema.type;
+
+import graphi.schema.GraphiConstraintMap;
 
 import java.util.Map;
 

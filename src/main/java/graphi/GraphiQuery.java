@@ -1,6 +1,5 @@
 package graphi;
 
-import graphi.command.Command;
 import graphi.command.execution.CommandExecutor;
 
 import java.util.HashMap;
@@ -12,7 +11,7 @@ import java.util.Map;
 public class GraphiQuery {
 
   private String name;
-  private Command command;
+  private GraphiEndpointMap graphiEndpointMap;
   private Map<String, String> argumentsMap;
   private Map<String, GraphiQuery> children;
   private CommandExecutor executor;
@@ -42,12 +41,12 @@ public class GraphiQuery {
     this.name = name;
   }
 
-  public Command getCommand() {
-    return command;
+  public GraphiEndpointMap getGraphiEndpointMap() {
+    return graphiEndpointMap;
   }
 
-  public void setCommand(Command command) {
-    this.command = command;
+  public void setGraphiEndpointMap(GraphiEndpointMap graphiEndpointMap) {
+    this.graphiEndpointMap = graphiEndpointMap;
   }
 
   public Map<String, String> getArgumentsMap() {

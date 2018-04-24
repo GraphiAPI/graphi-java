@@ -3,8 +3,8 @@ package graphi.tools;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import graphi.GraphiQuery;
 import graphi.GraphiSchema;
-import graphi.schema.GraphiField;
-import graphi.schema.GraphiObjectType;
+import graphi.schema.type.GraphiField;
+import graphi.schema.type.GraphiObjectType;
 
 import java.io.IOException;
 import java.util.HashMap;

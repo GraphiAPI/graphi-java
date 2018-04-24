@@ -1,4 +1,4 @@
-package graphi.schema;
+package graphi.schema.type;
 
 import java.util.HashSet;
 import java.util.Set;

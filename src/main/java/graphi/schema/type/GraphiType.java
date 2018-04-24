@@ -1,4 +1,4 @@
-package graphi.schema;
+package graphi.schema.type;
 
 public interface GraphiType<T> {
 

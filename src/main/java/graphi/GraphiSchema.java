@@ -1,7 +1,7 @@
 package graphi;
 
-import graphi.schema.GraphiField;
-import graphi.schema.GraphiObjectType;
+import graphi.schema.type.GraphiField;
+import graphi.schema.type.GraphiObjectType;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

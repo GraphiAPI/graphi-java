@@ -5,20 +5,20 @@ public class Graphi {
   private static Graphi INSTANCE;
 
   private final GraphiSchema graphiSchema;
-  private final GraphiEndpoint graphiEndpoint;
+  private final GraphiEndpointMap graphiEndpointMap;
 
-  private Graphi(GraphiSchema graphiSchema, GraphiEndpoint graphiEndpoint) {
+  private Graphi(GraphiSchema graphiSchema, GraphiEndpointMap graphiEndpointMap) {
     this.graphiSchema = graphiSchema;
-    this.graphiEndpoint = graphiEndpoint;
+    this.graphiEndpointMap = graphiEndpointMap;
   }
 
   public GraphiResponse execute(GraphiRequest request) {
     return GraphiResponse.empty();
   }
 
-  public static Graphi init(GraphiSchema graphiSchema, GraphiEndpoint graphiEndpoint) {
+  public static Graphi init(GraphiSchema graphiSchema, GraphiEndpointMap graphiEndpointMap) {
     if (INSTANCE == null) {
-      INSTANCE = new Graphi(graphiSchema, graphiEndpoint);
+      INSTANCE = new Graphi(graphiSchema, graphiEndpointMap);
     }
     return INSTANCE;
   }

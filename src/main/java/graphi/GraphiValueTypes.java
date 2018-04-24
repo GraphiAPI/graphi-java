@@ -1,12 +1,12 @@
 package graphi;
 
-import graphi.schema.GraphiScalarType;
+import graphi.schema.type.GraphiValueType;
 
-public class GraphiScalarTypes {
+public class GraphiValueTypes {
 
-  private GraphiScalarTypes() {}
+  private GraphiValueTypes() {}
 
-  public static class GBoolean extends GraphiScalarType<GBoolean> {
+  public static class GBoolean extends GraphiValueType<GBoolean> {
 
     @Override
     public String getName() {
@@ -24,7 +24,7 @@ public class GraphiScalarTypes {
     }
   }
 
-  public static class GNumber extends GraphiScalarType<GNumber> {
+  public static class GNumber extends GraphiValueType<GNumber> {
 
     @Override
     public String getName() {
@@ -42,7 +42,7 @@ public class GraphiScalarTypes {
     }
   }
 
-  public static class GString extends GraphiScalarType<GString> {
+  public static class GString extends GraphiValueType<GString> {
 
     @Override
     public String getName() {
