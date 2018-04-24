@@ -1,12 +1,12 @@
 package graphi;
 
-import graphi.schema.type.ValueType;
+import graphi.schema.type.GraphiValueType;
 
 public class GraphiValueTypes {
 
   private GraphiValueTypes() {}
 
-  public static class GBoolean extends ValueType<GBoolean> {
+  public static class GraphiValueBoolean extends GraphiValueType<GraphiValueBoolean> {
 
     @Override
     public String getName() {
@@ -19,12 +19,12 @@ public class GraphiValueTypes {
     }
 
     @Override
-    public GBoolean deserialize(String json) {
+    public GraphiValueBoolean deserialize(String json) {
       return null;
     }
   }
 
-  public static class GNumber extends ValueType<GNumber> {
+  public static class GraphiValueNumber extends GraphiValueType<GraphiValueNumber> {
 
     @Override
     public String getName() {
@@ -37,12 +37,12 @@ public class GraphiValueTypes {
     }
 
     @Override
-    public GNumber deserialize(String json) {
+    public GraphiValueNumber deserialize(String json) {
       return null;
     }
   }
 
-  public static class GString extends ValueType<GString> {
+  public static class GraphiValueString extends GraphiValueType<GraphiValueString> {
 
     @Override
     public String getName() {
@@ -55,7 +55,7 @@ public class GraphiValueTypes {
     }
 
     @Override
-    public GString deserialize(String json) {
+    public GraphiValueString deserialize(String json) {
       return null;
     }
   }

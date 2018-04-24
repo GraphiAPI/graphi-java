@@ -1,8 +1,8 @@
 package graphi.query;
 
 import graphi.query.executor.CommandExecutor;
-import graphi.schema.Constraint;
-import graphi.schema.Type;
+import graphi.schema.GraphiConstraint;
+import graphi.schema.GraphiTypeInterface;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ public interface Command {
 
   String getName();
 
-  Constraint getParams();
+  GraphiConstraint getParams();
 
-  Type getReturnType();
+  GraphiTypeInterface getReturnType();
 
   List<CommandExecutor> getExecutorList();
 

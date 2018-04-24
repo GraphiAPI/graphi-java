@@ -1,8 +1,8 @@
 package graphi.examples.simpleblog;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import graphi.EndpointsMap;
 import graphi.Graphi;
+import graphi.GraphiFactory;
 import graphi.GraphiRequest;
 import graphi.GraphiSchema;
 import graphi.examples.simpleblog.entity.Author;
@@ -40,8 +40,8 @@ public class SimpleBlogApp extends HttpServlet {
 
   private void buildGraphi() {
     graphi = Graphi.init(
-      GraphiSchema.scan(Post.class, Author.class, Category.class, Tag.class),
-      EndpointsMap.use(new PostRepository())
+      GraphiSchema.registerObjectTypes(Post.class, Author.class, Category.class, Tag.class),
+      GraphiFactory.registerEndpoints(new PostRepository()))
     );
   }
 

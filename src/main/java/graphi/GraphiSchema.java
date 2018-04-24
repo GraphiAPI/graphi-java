@@ -1,45 +1,53 @@
 package graphi;
 
-import graphi.schema.type.GraphiField;
-import graphi.schema.type.ObjectType;
+import graphi.annotation.GraphiEndpoint;
+import graphi.annotation.GraphiType;
+import graphi.schema.GraphiJEndpoint;
+import graphi.schema.type.GraphiObjectType;
 
-import java.util.LinkedHashMap;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GraphiSchema {
 
-  private final Map<String, ObjectType> typesMap;
-  private final EndpointsMap endpointsMap;
+  private static final Map<String, GraphiObjectType> typesMap = new HashMap<>();
+  private static final Map<String, GraphiJEndpoint> endpointsMap = new HashMap<>();
 
-  public GraphiSchema() {
-    typesMap = new LinkedHashMap<>();
-    this.endpointsMap = new EndpointsMap();
-  }
-
-  public void addType(String name, ObjectType objectType) {
+  public void addType(String name, GraphiObjectType GraphiObjectType) {
     if (typesMap.containsKey(name)) {
-      throw new IllegalStateException(String.format("ObjectType %s already defined.", name));
+      throw new IllegalStateException(String.format("GraphiObjectType %s already defined.", name));
     }
-    typesMap.put(name, objectType);
+    typesMap.put(name, GraphiObjectType);
   }
 
-  public static GraphiSchema scan(Class... graphiTypeClasses) {
+  public static void registerObjectTypes(Class... graphiTypeClasses) {
     for (Class typeClass : graphiTypeClasses) {
-      graphi.annotation.GraphiType graphiTypeAnnot = (graphi.annotation.GraphiType)typeClass.getAnnotation(graphi.annotation.GraphiType.class);
-      String typeName = graphiTypeAnnot.name().isEmpty() ? typeClass.getSimpleName() : graphiTypeAnnot.name();
-      ObjectType objectType = new ObjectType(typeName);
-      for (java.lang.reflect.Field jField : typeClass.getFields()) {
-        GraphiField graphiField = new GraphiField(jField.getName());
+      if (typeClass.isAnnotationPresent(GraphiType.class)) {
+        GraphiObjectType graphiObjectType = new GraphiObjectType(typeClass);
+        typesMap.put(graphiObjectType.getName(), graphiObjectType);
       }
-
     }
   }
 
+  public static void registerEndpoints(Object... endpointResolvers) {
+    for (Object endpointResolver : endpointResolvers) {
+      for (Method method : endpointResolver.getClass().getMethods()) {
+        if (method.isAnnotationPresent(GraphiEndpoint.class)) {
+          GraphiJEndpoint endpoint = new GraphiJEndpoint(method);
+          endpointsMap.put(endpoint.getName(), endpoint);
+        }
+      }
+    }
+  }
+
+ /*
+  todo
   public static GraphiSchema merge(GraphiSchema... graphiSchemas) {
     GraphiSchema merged = new GraphiSchema();
     for (GraphiSchema graphiSchema : graphiSchemas) {
       merged.typesMap.putAll(graphiSchema.typesMap);
     }
-  }
+  }*/
 
 }
