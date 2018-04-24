@@ -1,17 +1,30 @@
 package graphi.tools;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import graphi.GraphiQuery;
 import graphi.GraphiSchema;
 import graphi.schema.GraphiField;
 import graphi.schema.GraphiObjectType;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("unchecked")
 public class GraphiParser {
 
+  private static final Map<String, GraphiQuery> COMMAND_GRAPH_CACHE = new HashMap<>();
+
   private GraphiParser() {
+
+  }
+
+  public static GraphiQuery parseCommandGraph(String json) throws IOException {
+    if (COMMAND_GRAPH_CACHE.containsKey(json))
+      return COMMAND_GRAPH_CACHE.get(json);
+
+    GraphiQuery graphiQuery = new GraphiQuery();
+    Map commandGraphMap = new ObjectMapper().readValue(json, Map.class);
 
   }
 

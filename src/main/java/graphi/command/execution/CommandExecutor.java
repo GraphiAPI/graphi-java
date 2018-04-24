@@ -1,4 +1,4 @@
-package graphi.execution;
+package graphi.command.execution;
 
 public interface CommandExecutor {
 

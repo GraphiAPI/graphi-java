@@ -1,10 +1,10 @@
 {
-  "saveCategoryAndPost: CategoryPost": {
+  "createCategoryThenPost": {
     "category: saveCategory": {
       "args": {
         "newCategoryParams": "$categoryParams"
       },
-      "next": {
+      "then": {
         "post: savePost": {
           "args": {
             "newPostParams": {

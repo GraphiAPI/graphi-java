@@ -2,14 +2,14 @@ package graphi.examples.simpleblog;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import graphi.Graphi;
-import graphi.GraphiApi;
+import graphi.GraphiEndpoint;
 import graphi.GraphiRequest;
 import graphi.GraphiSchema;
-import graphi.examples.simpleblog.controller.PostController;
 import graphi.examples.simpleblog.entity.Author;
 import graphi.examples.simpleblog.entity.Category;
 import graphi.examples.simpleblog.entity.Post;
 import graphi.examples.simpleblog.entity.Tag;
+import graphi.examples.simpleblog.repository.PostRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +31,7 @@ public class SimpleBlogApp extends HttpServlet {
   public void init() throws ServletException {
     super.init();
     try {
-      Database.init(new ObjectMapper().readValue(new File("database.json"), Map.class));
+      Datasource.init(new ObjectMapper().readValue(new File("database.json"), Map.class));
       buildGraphi();
     } catch (IOException e) {
       e.printStackTrace();
@@ -41,7 +41,7 @@ public class SimpleBlogApp extends HttpServlet {
   private void buildGraphi() {
     graphi = Graphi.init(
       GraphiSchema.use(Post.class, Author.class, Category.class, Tag.class),
-      GraphiApi.use(PostController.class));
+      GraphiEndpoint.use(PostRepository.class));
   }
 
   @Override

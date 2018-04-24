@@ -1,4 +1,4 @@
-package graphi.api;
+package graphi.command;
 
 import java.util.List;
 

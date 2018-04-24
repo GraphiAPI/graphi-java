@@ -1,6 +1,6 @@
 package graphi;
 
-import graphi.api.Command;
+import graphi.command.Command;
 
 import java.util.HashMap;
 import java.util.Map;
