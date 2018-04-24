@@ -1,0 +1,19 @@
+{
+  "saveCategoryAndPost: CategoryPost": {
+    "category: saveCategory": {
+      "args": {
+        "newCategoryParams": "$categoryParams"
+      },
+      "next": {
+        "post: savePost": {
+          "args": {
+            "newPostParams": {
+              "@extend": "$postParams",
+              "categoryId": "$category.id"
+            }
+          }
+        }
+      }
+    }
+  }
+}
