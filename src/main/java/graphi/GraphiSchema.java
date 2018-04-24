@@ -7,38 +7,45 @@ import graphi.schema.type.GraphiObjectType;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class GraphiSchema {
 
-  private static final Map<String, GraphiObjectType> typesMap = new HashMap<>();
-  private static final Map<String, GraphiJEndpoint> endpointsMap = new HashMap<>();
+  private final Map<String, GraphiObjectType> typesMap = new HashMap<>();
+  private final Map<String, GraphiJEndpoint> endpointsMap = new HashMap<>();
 
-  public void addType(String name, GraphiObjectType GraphiObjectType) {
-    if (typesMap.containsKey(name)) {
-      throw new IllegalStateException(String.format("GraphiObjectType %s already defined.", name));
+  public GraphiSchema(List<GraphiObjectType> objectTypes, List<GraphiJEndpoint> endpoints) {
+    for (GraphiObjectType objectType : objectTypes) {
+      typesMap.put(objectType.getName(), objectType);
     }
-    typesMap.put(name, GraphiObjectType);
+    for (GraphiJEndpoint endpoint : endpoints) {
+      endpointsMap.put(endpoint.getName(), endpoint);
+    }
   }
 
-  public static void registerObjectTypes(Class... graphiTypeClasses) {
+  public static List<GraphiObjectType> buildObjectTypes(Class... graphiTypeClasses) {
+    List<GraphiObjectType> objectTypes = new LinkedList<>();
     for (Class typeClass : graphiTypeClasses) {
       if (typeClass.isAnnotationPresent(GraphiType.class)) {
         GraphiObjectType graphiObjectType = new GraphiObjectType(typeClass);
-        typesMap.put(graphiObjectType.getName(), graphiObjectType);
+        objectTypes.add(graphiObjectType);
       }
     }
+    return objectTypes;
   }
 
-  public static void registerEndpoints(Object... endpointResolvers) {
+  public static List<GraphiJEndpoint> buildEndpoints(Object... endpointResolvers) {
+    List<GraphiJEndpoint> endpoints = new LinkedList<>();
     for (Object endpointResolver : endpointResolvers) {
       for (Method method : endpointResolver.getClass().getMethods()) {
         if (method.isAnnotationPresent(GraphiEndpoint.class)) {
-          GraphiJEndpoint endpoint = new GraphiJEndpoint(method);
-          endpointsMap.put(endpoint.getName(), endpoint);
+          endpoints.add(new GraphiJEndpoint(method));
         }
       }
     }
+    return endpoints;
   }
 
  /*

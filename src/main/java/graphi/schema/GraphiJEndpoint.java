@@ -1,8 +1,6 @@
 package graphi.schema;
 
-import graphi.Graphi;
 import graphi.annotation.GraphiEndpoint;
-import graphi.annotation.GraphiParam;
 import graphi.schema.field.GParam;
 
 import java.lang.reflect.Method;
@@ -22,16 +20,13 @@ public class GraphiJEndpoint {
 
     setName(method.getName());
     GraphiEndpoint endpointAt = method.getAnnotation(GraphiEndpoint.class);
-    setName(endpointAt.name().isEmpty() ? method.getName() : endpointAt.name());
-    for (Parameter jParam : method.getParameters()) {
-      String paramName = jParam.getName();
-      String paramType = Graphi.resolveGraphiType(jParam.getType());
-      GraphiParam paramAt = jParam.getAnnotation(GraphiParam.class);
-      if (paramAt != null && !paramAt.name().isEmpty()) {
-        paramName = paramAt.name();
+    if (endpointAt != null) {
+      if (!endpointAt.name().isEmpty()) {
+        setName(endpointAt.name());
       }
-      GParam GParam = new GParam(paramName, paramType);
-      addParam(new GParam(GParam.getName(), ));
+    }
+    for (Parameter jParam : method.getParameters()) {
+      addParam(new GParam(jParam));
     }
   }
 

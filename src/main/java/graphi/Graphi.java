@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class Graphi {
 
-  private static GraphiSchema GRAPHI_SCHEMA;
+  private static GraphiSchema SCHEMA;
   private static Graphi INSTANCE;
 
   private Graphi(GraphiSchema graphiSchema) {
-    GRAPHI_SCHEMA = graphiSchema;
+    SCHEMA = graphiSchema;
   }
 
   public GraphiResponse execute(GraphiRequest request) {
