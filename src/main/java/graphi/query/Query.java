@@ -1,6 +1,8 @@
-package graphi;
+package graphi.query;
 
+import graphi.Graphi;
 import graphi.query.executor.CommandExecutor;
+import graphi.schema.GraphiJEndpoint;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,25 +13,35 @@ import java.util.Map;
 public class Query {
 
   private String name;
-  private Map<String, String> argumentsMap;
+  private QueryArguments arguments;
   private Map<String, Query> children;
   private CommandExecutor executor;
   private Boolean executeAsync = true;
-  private Boolean isNamedCommand = false;
+  private Boolean namedQuery = false; /* a fake query to change data output format */
+  private GraphiJEndpoint endpoint;
 
   public Query() {
-    argumentsMap = new HashMap<>();
     children = new HashMap<>();
   }
 
   public Query(Map<String, Object> queryMap) {
-    queryMap.forEach((name, obj) -> {
-      String[] namePlusCommandName = name.split(":");
-      if (namePlusCommandName.length > 1) {
-        this.name = namePlusCommandName[0];
-        //this.query = findCommand()
-      }
+    queryMap.forEach((key, obj) -> {
+      String[] namePlusCommandName = key.split(":");
+      name = namePlusCommandName[0];
+      endpoint = resolveEndpoint(namePlusCommandName);
+      namedQuery = resolveNamedQuery();
+      if (namedQuery) return;
+
     });
+  }
+
+  private GraphiJEndpoint resolveEndpoint(String[] namePlusCommandName) {
+    return Graphi.graphi().getSchema()
+      .getGraphiEndpoint(namePlusCommandName[namePlusCommandName.length - 1]);
+  }
+
+  private Boolean resolveNamedQuery() {
+    return endpoint == null;
   }
 
   public String getName() {
@@ -38,14 +50,6 @@ public class Query {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Map<String, String> getArgumentsMap() {
-    return argumentsMap;
-  }
-
-  public void setArgumentsMap(Map<String, String> argumentsMap) {
-    this.argumentsMap = argumentsMap;
   }
 
   public Map<String, Query> getChildren() {
@@ -72,11 +76,4 @@ public class Query {
     this.executeAsync = executeAsync;
   }
 
-  public Boolean getNamedCommand() {
-    return isNamedCommand;
-  }
-
-  public void setNamedCommand(Boolean namedCommand) {
-    isNamedCommand = namedCommand;
-  }
 }

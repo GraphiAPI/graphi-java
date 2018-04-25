@@ -2,7 +2,7 @@ package graphi.tools;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import graphi.GraphiSchema;
-import graphi.Query;
+import graphi.query.Query;
 import graphi.schema.field.GField;
 import graphi.schema.type.GraphiObjectType;
 
@@ -23,7 +23,7 @@ public class GraphiParser {
     if (COMMAND_GRAPH_CACHE.containsKey(json))
       return COMMAND_GRAPH_CACHE.get(json);
 
-    Query query = new Query();
+    Query queryGraph = new Query();
     Map commandGraphMap = new ObjectMapper().readValue(json, Map.class);
 
   }

@@ -1,0 +1,20 @@
+{
+  "post: createPost": {
+    "__args": {
+      "params": "$postParams"
+    }
+  },
+  "tags: createTagList": {
+    "__args": {
+      "paramsList": "$tagParamsList"
+    }
+  },
+  "post: updatePost": {
+    "__args": {
+      "params": {
+        "@spread": "$__sibling.post",
+        "tags": "$__sibling.tags"
+      }
+    }
+  }
+}

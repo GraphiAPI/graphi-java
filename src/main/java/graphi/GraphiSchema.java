@@ -25,6 +25,14 @@ public class GraphiSchema {
     }
   }
 
+  public GraphiObjectType getGraphiObjectType(String name) {
+    return typesMap.get(name);
+  }
+
+  public GraphiJEndpoint getGraphiEndpoint(String name) {
+    return endpointsMap.get(name);
+  }
+
   public static List<GraphiObjectType> buildObjectTypes(Class... graphiTypeClasses) {
     List<GraphiObjectType> objectTypes = new LinkedList<>();
     for (Class typeClass : graphiTypeClasses) {
