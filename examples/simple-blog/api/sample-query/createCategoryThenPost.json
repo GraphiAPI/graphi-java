@@ -9,7 +9,7 @@
         "__args": {
           "params": {
             "@spread": "$postParams",
-            "categoryId": "$__parent.id"
+            "categoryId": "@parent.id"
           }
         }
       }

@@ -12,8 +12,8 @@
   "post: updatePost": {
     "__args": {
       "params": {
-        "@spread": "$__sibling.post",
-        "tags": "$__sibling.tags"
+        "@spread": "@sibling.post",
+        "tags": "@sibling.tags"
       }
     }
   }
