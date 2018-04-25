@@ -1,10 +1,12 @@
 package graphi.query;
 
-import java.util.LinkedList;
-import java.util.List;
+import graphi.query.executor.ExecutionStrategy;
 
 public class QueryExecutionTask {
 
-  List<QueryExecutionTask> subTasks = new LinkedList<>();
+  private ExecutionStrategy executionStrategy;
 
+  public QueryExecutionTask() {
+
+  }
 }

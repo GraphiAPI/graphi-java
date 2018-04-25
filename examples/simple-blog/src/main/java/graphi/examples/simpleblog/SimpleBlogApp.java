@@ -47,8 +47,6 @@ public class SimpleBlogApp extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
     String rawPayload = req.getReader().lines().collect(Collectors.joining());
-    ObjectMapper mapper = new ObjectMapper();
-    Map payload = mapper.readValue(rawPayload, Map.class);
 
     //GraphqlServer graphqlServer = new GraphqlServer(GraphqlBootstrap.init());
     //GraphqlResult result = graphqlServer.execute((String)jsonPayload.get("query"));

@@ -1,29 +1,39 @@
 package graphi;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import graphi.query.Query;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("unchecked")
 public class GraphiRequest {
 
-  private Query queryGraph;
-  private Object data;
+  private final GraphiResponse response;
+  private final String payload;
+  private final Query queryGraph;
+  private final Object data;
 
-  public GraphiRequest(final Map<String, Object> payload) {
-    if (payload == null || payload.isEmpty()) {
+  public GraphiRequest(String payload) throws IOException {
+    this.response = new GraphiResponse();
+    this.payload = payload;
+    ObjectMapper mapper = new ObjectMapper();
+    Map payloadMap = mapper.readValue(payload, Map.class);
+
+    if (payloadMap == null || payloadMap.isEmpty()) {
       throw new IllegalArgumentException("Payload is null or empty.");
     }
-    Map<String, Object> query = (Map<String, Object>)payload.get("queryGraph");
+    Map<String, Map<String, Object>> queryMap = (Map<String, Map<String, Object>>)payloadMap.get("query");
     Object data = new HashMap<>();
-    if (query == null) {
+    if (queryMap == null) {
       /* if `queryGraph` param is missing, then whole payload is queryGraph, and data is empty */
-      query = new HashMap<>(payload);
+      queryMap = new HashMap<>(payloadMap);
     } else {
-      data = payload.get("data");
+      data = payloadMap.get("data");
     }
 
+    this.queryGraph = new Query(queryMap, null);
     this.data = data;
   }
 

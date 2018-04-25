@@ -1,16 +1,7 @@
 package graphi.query.executor;
 
-public class QueryExecutor implements CommandExecutor {
+public class QueryExecutor {
 
-  public static final String COMMAND_NAME = "query";
 
-  @Override
-  public String getCommandName() {
-    return COMMAND_NAME;
-  }
 
-  @Override
-  public ExecutorStrategy getExecutionStrategy() {
-    return null;
-  }
 }

@@ -1,6 +1,6 @@
 package graphi.query;
 
-import graphi.query.executor.CommandExecutor;
+import graphi.query.executor.QueryExecutor;
 import graphi.schema.GraphiJEndpoint;
 
 import java.util.HashMap;
@@ -17,28 +17,35 @@ public class Query {
   private static final String __USING = "__using";
   private static final String __ARGS = "__args";
 
+  private String pathName;
   private String fullName;
   private String name;
   private String endpointName;
   private String __using;
   private QueryArguments __args;
+  private Query parent;
   private Map<String, Query> children;
-  private CommandExecutor executor;
-  private boolean executeAsync = true;
+  private QueryExecutor executor;
   private boolean namedQuery = false; /* a fake query to change data output format */
   private GraphiJEndpoint endpoint;
+  private QueryExecutionPlan executionPlan;
+  private boolean isRootQuery = true;
 
-  public Query() {
-    children = new HashMap<>();
+  public Query(boolean isRootQuery) {
+    this.children = new HashMap<>();
+    this.isRootQuery = isRootQuery;
   }
 
-  public Query(Map<String, Map<String, Object>> queryMap) {
-    queryMap.forEach((key, obj) -> {
-      fullName = key;
+  /* send path=null or empty string to mark this query as root */
+  public Query(Map<String, Map<String, Object>> queryMap, String path) {
+    this(path == null || path.isEmpty());
+    this.pathName = path;
+    queryMap.forEach((queryName, queryDef) -> {
+      fullName = queryName;
       String[] namePlusEndpointName = fullName.split(":");
       name = namePlusEndpointName[0];
       endpointName = namePlusEndpointName[namePlusEndpointName.length - 1];
-      namedQuery = resolveNamedQuery(obj);
+      namedQuery = resolveNamedQuery(queryDef);
       if (!namedQuery) {
         endpoint = graphi().getSchema().getGraphiEndpoint(endpointName);
         namedQuery = endpoint == null;
@@ -54,36 +61,15 @@ public class Query {
     return NAMED_QUERY.equals(endpointName) || NAMED_QUERY.equals(obj.get(__USING));
   }
 
-  public String getName() {
-    return name;
+  private Query getRootQuery() {
+    return isRootQuery ? this : parent.getRootQuery();
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+  private Map<String, Object>
 
-  public Map<String, Query> getChildren() {
-    return children;
-  }
-
-  public void setChildren(Map<String, Query> children) {
-    this.children = children;
-  }
-
-  public CommandExecutor getExecutor() {
-    return executor;
-  }
-
-  public void setExecutor(CommandExecutor executor) {
-    this.executor = executor;
-  }
-
-  public Boolean getExecuteAsync() {
-    return executeAsync;
-  }
-
-  public void setExecuteAsync(Boolean executeAsync) {
-    this.executeAsync = executeAsync;
-  }
+  /**************************************************/
+  /* Getters & Setters
+  /**************************************************/
+  //todo
 
 }
