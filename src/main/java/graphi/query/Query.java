@@ -1,47 +1,57 @@
 package graphi.query;
 
-import graphi.Graphi;
 import graphi.query.executor.CommandExecutor;
 import graphi.schema.GraphiJEndpoint;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static graphi.Graphi.*;
+
 /**
  * Combination of GraphiEndpoints in a graph manner
  */
 public class Query {
 
+  public static final String NAMED_QUERY = "namedQuery";
+  private static final String __USING = "__using";
+  private static final String __ARGS = "__args";
+
+  private String fullName;
   private String name;
-  private QueryArguments arguments;
+  private String endpointName;
+  private String __using;
+  private QueryArguments __args;
   private Map<String, Query> children;
   private CommandExecutor executor;
-  private Boolean executeAsync = true;
-  private Boolean namedQuery = false; /* a fake query to change data output format */
+  private boolean executeAsync = true;
+  private boolean namedQuery = false; /* a fake query to change data output format */
   private GraphiJEndpoint endpoint;
 
   public Query() {
     children = new HashMap<>();
   }
 
-  public Query(Map<String, Object> queryMap) {
+  public Query(Map<String, Map<String, Object>> queryMap) {
     queryMap.forEach((key, obj) -> {
-      String[] namePlusCommandName = key.split(":");
-      name = namePlusCommandName[0];
-      endpoint = resolveEndpoint(namePlusCommandName);
-      namedQuery = resolveNamedQuery();
+      fullName = key;
+      String[] namePlusEndpointName = fullName.split(":");
+      name = namePlusEndpointName[0];
+      endpointName = namePlusEndpointName[namePlusEndpointName.length - 1];
+      namedQuery = resolveNamedQuery(obj);
+      if (!namedQuery) {
+        endpoint = graphi().getSchema().getGraphiEndpoint(endpointName);
+        namedQuery = endpoint == null;
+      }
       if (namedQuery) return;
+
+
 
     });
   }
 
-  private GraphiJEndpoint resolveEndpoint(String[] namePlusCommandName) {
-    return Graphi.graphi().getSchema()
-      .getGraphiEndpoint(namePlusCommandName[namePlusCommandName.length - 1]);
-  }
-
-  private Boolean resolveNamedQuery() {
-    return endpoint == null;
+  private boolean resolveNamedQuery(Map<String, Object> obj) {
+    return NAMED_QUERY.equals(endpointName) || NAMED_QUERY.equals(obj.get(__USING));
   }
 
   public String getName() {
