@@ -1,17 +1,17 @@
 {
   "post: createPost": {
     "__args": {
-      "params": "$postParams"
+      "postParams": "$postParams"
     }
   },
   "tags: createTagList": {
     "__args": {
-      "paramsList": "$tagParamsList"
+      "postParamsList": "$tagParamsList"
     }
   },
   "post: updatePost": {
     "__args": {
-      "params": {
+      "postParams": {
         "@spread": "@sibling.post",
         "tags": "@sibling.tags"
       }

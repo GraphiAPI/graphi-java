@@ -10,23 +10,16 @@ import java.util.Map;
 
 public class GraphiResponse {
 
+  private final GraphiRequest request;
+  private final QueryResult result;
   private Object data;
   private List<Map> errors;
-  private final QueryResult result;
 
-  public GraphiResponse() {
+  public GraphiResponse(GraphiRequest request) {
+    this.request = request;
     this.data = new HashMap<>();
     this.errors = new LinkedList<>();
     this.result = new QueryResult();
-  }
-
-  public GraphiResponse(List<Map> errors) {
-    this();
-    this.errors.addAll(errors);
-  }
-
-  public GraphiResponse(Object data, List<Map> errors) {
-    this();
   }
 
   public static GraphiResponse empty() {

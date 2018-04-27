@@ -1,13 +1,16 @@
 package graphi.schema;
 
 import graphi.annotation.GraphiEndpoint;
+import graphi.query.QueryArguments;
 import graphi.schema.field.GParam;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class GraphiJEndpoint {
 
   private String name;
@@ -28,6 +31,11 @@ public class GraphiJEndpoint {
     for (Parameter jParam : method.getParameters()) {
       addParam(new GParam(jParam));
     }
+  }
+
+  public <T> T invoke(QueryArguments args) throws InvocationTargetException, IllegalAccessException {
+    Object[] args = new Object[resolverMethod.getParameterCount()];
+    return (T)resolverMethod.invoke(resolverObject, args);
   }
 
   public String getName() {

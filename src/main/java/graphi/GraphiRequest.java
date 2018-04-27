@@ -11,15 +11,15 @@ import java.util.Map;
 public class GraphiRequest {
 
   private final GraphiResponse response;
-  private final String payload;
-  private final Query queryGraph;
+  private final GraphiRequestPayload payload;
+  private final Query query;
   private final Object data;
 
-  public GraphiRequest(String payload) throws IOException {
-    this.response = new GraphiResponse();
-    this.payload = payload;
+  public GraphiRequest(String rawPayload) throws IOException {
+    this.response = new GraphiResponse(this);
     ObjectMapper mapper = new ObjectMapper();
-    Map payloadMap = mapper.readValue(payload, Map.class);
+    this.payload = mapper.readValue(rawPayload, GraphiRequestPayload.class);
+    Map payloadMap = mapper.readValue(rawPayload, Map.class);
 
     if (payloadMap == null || payloadMap.isEmpty()) {
       throw new IllegalArgumentException("Payload is null or empty.");
@@ -27,13 +27,13 @@ public class GraphiRequest {
     Map<String, Map<String, Object>> queryMap = (Map<String, Map<String, Object>>)payloadMap.get("query");
     Object data = new HashMap<>();
     if (queryMap == null) {
-      /* if `queryGraph` param is missing, then whole payload is queryGraph, and data is empty */
+      /* if `query` param is missing, then whole payload is query, and data is empty */
       queryMap = new HashMap<>(payloadMap);
     } else {
       data = payloadMap.get("data");
     }
 
-    this.queryGraph = new Query(queryMap, null);
+    this.query = Graphi.graphi().resolveQuery(payload.getRawQuery());
     this.data = data;
   }
 
