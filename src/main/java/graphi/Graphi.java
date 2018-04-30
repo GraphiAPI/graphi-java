@@ -4,19 +4,28 @@ import graphi.query.Query;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Graphi {
 
-  private static Graphi INSTANCE;
-
+  private final String label;
   private final GraphiSchema schema;
 
+  private Graphi(String label, GraphiSchema graphiSchema) {
+    this.label = label;
+    this.schema = graphiSchema;
+  }
+
   private Graphi(GraphiSchema graphiSchema) {
-    schema = graphiSchema;
+    this(ROOT_LABEL, graphiSchema);
   }
 
   public GraphiSchema getSchema() {
     return schema;
+  }
+
+  public GraphiSchema updateSchema(GraphiSchema graphiSchema) {
+    return schema.merge(graphiSchema);
   }
 
   public GraphiResponse execute(GraphiRequest request) {
@@ -32,18 +41,19 @@ public class Graphi {
     return
   }
 
-  public static Graphi init(GraphiSchema graphiSchema) {
-    if (INSTANCE == null) {
-      INSTANCE = new Graphi(graphiSchema);
-    }
-    return INSTANCE;
+  public static Graphi graphi() {
+    return graphi(ROOT_LABEL);
   }
 
-  public static Graphi graphi() {
-    if (INSTANCE == null)
-      throw new IllegalStateException("Graphi is not initialized yet.");
-    return INSTANCE;
+  public static Graphi graphi(String label) {
+    return LABEL_INSTANCE_MAP.get(label);
   }
+
+  private static final Graphi ROOT_INSTANCE = new Graphi(GraphiSchema.emptySchema());
+
+  private static final String ROOT_LABEL = UUID.randomUUID().toString();
+
+  private static final Map<String, Graphi> LABEL_INSTANCE_MAP = new HashMap<>();
 
   private static final Map<String, Query> QUERY_CACHE = new HashMap<>();
 

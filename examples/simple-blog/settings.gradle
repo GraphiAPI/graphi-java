@@ -1,3 +1,0 @@
-rootProject.name = 'simple-blog'
-include ':graphi-java'
-project(':graphi-java').projectDir = file('../..')
