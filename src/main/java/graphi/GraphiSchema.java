@@ -1,11 +1,11 @@
 package graphi;
 
-import graphi.annotation.GraphiEndpoint;
 import graphi.annotation.GraphiType;
-import graphi.schema.GraphiJEndpoint;
+import graphi.schema.GraphiEndpoint;
 import graphi.schema.type.GraphiObjectType;
 
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,9 +14,9 @@ import java.util.Map;
 public class GraphiSchema {
 
   private final Map<String, GraphiObjectType> typesMap = new HashMap<>();
-  private final Map<String, GraphiJEndpoint> endpointsMap = new HashMap<>();
+  private final Map<String, GraphiEndpoint> endpointsMap = new HashMap<>();
 
-  public GraphiSchema(List<GraphiObjectType> objectTypes, List<GraphiJEndpoint> endpoints) {
+  public GraphiSchema(List<GraphiObjectType> objectTypes, List<GraphiEndpoint> endpoints) {
     addObjectTypes(objectTypes);
     addEndpoints(endpoints);
   }
@@ -40,8 +40,8 @@ public class GraphiSchema {
     return this;
   }
 
-  public GraphiSchema addEndpoints(List<GraphiJEndpoint> endpoints) {
-    for (GraphiJEndpoint endpoint : endpoints) {
+  public GraphiSchema addEndpoints(List<GraphiEndpoint> endpoints) {
+    for (GraphiEndpoint endpoint : endpoints) {
       if (typesMap.containsKey(endpoint.getName()))
         throw new IllegalArgumentException(String.format("%s already defined", endpoint.getName()));
       endpointsMap.put(endpoint.getName(), endpoint);
@@ -56,8 +56,8 @@ public class GraphiSchema {
     return this;
   }
 
-  public GraphiSchema updateEndpoints(List<GraphiJEndpoint> endpoints) {
-    for (GraphiJEndpoint endpoint : endpoints) {
+  public GraphiSchema updateEndpoints(List<GraphiEndpoint> endpoints) {
+    for (GraphiEndpoint endpoint : endpoints) {
       endpointsMap.put(endpoint.getName(), endpoint);
     }
     return this;
@@ -71,12 +71,12 @@ public class GraphiSchema {
     return (List<GraphiObjectType>)typesMap.values();
   }
 
-  public GraphiJEndpoint getGraphiEndpoint(String name) {
+  public GraphiEndpoint getGraphiEndpoint(String name) {
     return endpointsMap.get(name);
   }
 
-  public List<GraphiJEndpoint> getAllGraphiEndpoints() {
-    return (List<GraphiJEndpoint>)endpointsMap.values();
+  public List<GraphiEndpoint> getAllGraphiEndpoints() {
+    return (List<GraphiEndpoint>)endpointsMap.values();
   }
 
   public static List<GraphiObjectType> buildObjectTypes(Class... graphiTypeClasses) {
@@ -90,12 +90,12 @@ public class GraphiSchema {
     return objectTypes;
   }
 
-  public static List<GraphiJEndpoint> buildEndpoints(Object... endpointResolvers) {
-    List<GraphiJEndpoint> endpoints = new LinkedList<>();
+  public static List<GraphiEndpoint> buildEndpoints(Object... endpointResolvers) {
+    List<GraphiEndpoint> endpoints = new LinkedList<>();
     for (Object endpointResolver : endpointResolvers) {
       for (Method method : endpointResolver.getClass().getMethods()) {
         if (method.isAnnotationPresent(GraphiEndpoint.class)) {
-          endpoints.add(new GraphiJEndpoint(method));
+          endpoints.add(new GraphiEndpoint(method));
         }
       }
     }

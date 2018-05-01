@@ -1,59 +1,71 @@
 package graphi.query;
 
+import graphi.Graphi;
 import graphi.query.executor.QueryExecutor;
-import graphi.schema.GraphiJEndpoint;
+import graphi.schema.GraphiEndpoint;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import static graphi.Graphi.*;
 
 /**
  * Combination of GraphiEndpoints in a graph manner
  */
+@SuppressWarnings("unchecked")
 public class Query {
 
+  public static final String ROOT = "root";
   public static final String __USING = "__using";
   public static final String __ARGS = "__args";
 
-  private Query parent;
-  private String path;
+  private boolean namedQuery = true; /* a fake query to change data output format */
   private String key;
+  private String absoluteKey;
   private String returnKey;
   private String endpointName;
+  private GraphiEndpoint endpoint;
   private String __using;
   private QueryArguments __args;
-  private Map<String, Query> children;
-  private QueryExecutor executor;
-  private boolean namedQuery = true; /* a fake query to change data output format */
-  private GraphiJEndpoint endpoint;
 
-  /* send path=null or empty string to mark this query as root */
-  public Query(Map<String, Map<String, Object>> queryMap, Query parent) {
+  private Query parent;
+  private Map<String, Query> children = new HashMap<>();
+
+  /* Create Root Query */
+  public Query() {
+    key = absoluteKey = returnKey = ROOT;
+    namedQuery = true;
+  }
+
+  /* send absoluteKey=null or empty string to mark this query as root */
+  public Query(Graphi graphi, Query parent, Map<String, Object> queryMap) {
+    __using = (String)queryMap.remove(__USING);
+    __args = resolveArguments((Map<String, Object>)queryMap.remove(__ARGS));
+    if (queryMap.isEmpty()) return;
+
     this.parent = parent;
-    queryMap.forEach((queryName, queryDef) -> {
+    for (String queryName : queryMap.keySet()) {
       key = queryName;
+      absoluteKey = parent.getAbsoluteKey() + "." + key;
+      /*Example query key -> "post: findPost", "post", ":findPost" */
       String[] namePlusEndpointName = key.split(":");
-      returnKey = namePlusEndpointName[0];
+      returnKey = namePlusEndpointName[0].isEmpty() ? namePlusEndpointName[1] : namePlusEndpointName[0];
       endpointName = namePlusEndpointName[namePlusEndpointName.length - 1];
-      endpoint = graphi().getSchema().getGraphiEndpoint(endpointName);
+      endpoint = graphi.getSchema().getGraphiEndpoint(endpointName);
       namedQuery = endpoint == null;
+      if (namedQuery) {
 
-      if (namedQuery) return;
-
-
-
-    });
+      }
+    }
+    this.parent.getChildren().put(key, this);
   }
 
-  private String resolvePath() {
-
+  private QueryArguments resolveArguments(Map<String, Object> args) {
+    if (args == null) return null;
   }
+
 
   public Query getRootQuery() {
     return getParent() == null ? this : parent.getRootQuery();
   }
-
-  private Map<String, Object>
 
   /**************************************************/
   /* Getters & Setters
@@ -68,12 +80,12 @@ public class Query {
     return __ARGS;
   }
 
-  public String getPath() {
-    return path;
+  public String getAbsoluteKey() {
+    return absoluteKey;
   }
 
-  public void setPath(String path) {
-    this.path = path;
+  public void setAbsoluteKey(String absoluteKey) {
+    this.absoluteKey = absoluteKey;
   }
 
   public String getKey() {
@@ -148,11 +160,11 @@ public class Query {
     this.namedQuery = namedQuery;
   }
 
-  public GraphiJEndpoint getEndpoint() {
+  public GraphiEndpoint getEndpoint() {
     return endpoint;
   }
 
-  public void setEndpoint(GraphiJEndpoint endpoint) {
+  public void setEndpoint(GraphiEndpoint endpoint) {
     this.endpoint = endpoint;
   }
 }

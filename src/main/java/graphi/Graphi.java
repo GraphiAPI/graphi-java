@@ -14,17 +14,14 @@ public class Graphi {
   private Graphi(String label, GraphiSchema graphiSchema) {
     this.label = label;
     this.schema = graphiSchema;
-  }
-
-  private Graphi(GraphiSchema graphiSchema) {
-    this(ROOT_LABEL, graphiSchema);
+    LABEL_INSTANCE_MAP.put(label, this);
   }
 
   public GraphiSchema getSchema() {
     return schema;
   }
 
-  public GraphiSchema updateSchema(GraphiSchema graphiSchema) {
+  public GraphiSchema addSchema(GraphiSchema graphiSchema) {
     return schema.merge(graphiSchema);
   }
 
@@ -49,11 +46,9 @@ public class Graphi {
     return LABEL_INSTANCE_MAP.get(label);
   }
 
-  private static final Graphi ROOT_INSTANCE = new Graphi(GraphiSchema.emptySchema());
+  private static final Map<String, Graphi> LABEL_INSTANCE_MAP = new HashMap<>();
 
   private static final String ROOT_LABEL = UUID.randomUUID().toString();
-
-  private static final Map<String, Graphi> LABEL_INSTANCE_MAP = new HashMap<>();
 
   private static final Map<String, Query> QUERY_CACHE = new HashMap<>();
 
@@ -64,5 +59,9 @@ public class Graphi {
     put(Double.class, "number");
     put(String.class, "string");
   }};
+
+  static {
+    new Graphi(ROOT_LABEL, GraphiSchema.emptySchema());
+  }
 
 }

@@ -1,6 +1,5 @@
 package graphi.schema;
 
-import graphi.annotation.GraphiEndpoint;
 import graphi.query.QueryArguments;
 import graphi.schema.field.GParam;
 
@@ -11,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
-public class GraphiJEndpoint {
+public class GraphiEndpoint {
 
   private String name;
   private List<GParam> GParams;
   private Object resolverObject;
   private Method resolverMethod;
 
-  public GraphiJEndpoint(Method method) {
+  public GraphiEndpoint(Method method) {
     this.GParams = new ArrayList<>();
 
     setName(method.getName());
