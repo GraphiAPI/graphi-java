@@ -13,8 +13,6 @@ repositories {
 }
 
 dependencies {
-  def hackableProjectPath = '../../jRoadie/hackable'
-  println file(hackableProjectPath)
   compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVer"
-  //compile project(':hackable') ?: "aaa"
+  compile "hackable:hackable:$hackableVer"
 }

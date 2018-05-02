@@ -1,6 +1,7 @@
 package graphi;
 
 import graphi.query.Query;
+import graphi.query.executor.QueryExecutor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,4 +65,7 @@ public class Graphi {
     new Graphi(ROOT_LABEL, GraphiSchema.emptySchema());
   }
 
+  public static QueryExecutor getDefaultExecutor() {
+    return null;
+  }
 }

@@ -1,6 +1,7 @@
 package graphi.query;
 
 import graphi.Graphi;
+import graphi.query.executor.QueryExecutor;
 import graphi.schema.GraphiEndpoint;
 
 import java.util.HashMap;
@@ -27,6 +28,8 @@ public class Query {
   private Query parent;
   private Map<String, Query> children = new HashMap<>();
 
+  private QueryExecutor executor = Graphi.getDefaultExecutor();
+
   /* Create Root Query */
   public Query() {
     key = absoluteKey = returnKey = ROOT;
@@ -36,7 +39,7 @@ public class Query {
   public Query(Graphi graphi, Query parent, String key, Map<String, Object> queryBody) {
     this.parent = parent;
     this.key = key;
-    absoluteKey = parent.getAbsoluteKey() + "." + key;
+    this.absoluteKey = parent.getAbsoluteKey() + "." + key;
 
     /* Example query key -> "post: findPost", "post", "findPost", "post:", ":findPost" */
     String[] namePlusEndpointName = key.split(":");
@@ -49,6 +52,12 @@ public class Query {
       children.put(innerQueryKey, new Query(graphi, this, innerQueryKey,
         (Map<String, Object>)queryBody.get(innerQueryKey)));
     }
+  }
+
+  public void
+
+  public void tryExecute() {
+
   }
 
   /**************************************************/
